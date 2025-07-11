@@ -6,13 +6,13 @@ const Navbar = () => {
     <nav id="navbar" className="navbar navbar-dark bg-dark">
       <a className="navbar-brand" href="/">
         <img
-          src={"vite.svg"}
+          src={"icon.png"}
           width="30"
           height="30"
-          className="d-inline-block align-top"
+          className="d-inline-block align-top mr-2"
           alt="Logo"
         />
-            Quiz via file
+        <span style={{fontFamily: "Berkshire Swash", fontWeight: "400"}}>Quiz via file</span>
       </a>
     </nav>
   );

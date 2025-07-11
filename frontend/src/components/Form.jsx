@@ -31,35 +31,37 @@ const Form = () => {
     };
     setLoading(true);
 
-    // await sleep(3000);
+    await sleep(3000);
 
     const formData = new FormData()
     formData.append("inputfile", inputfile)
 
-    formData.entries().forEach(([key, val]) => console.log(key+": "+val))
+    // formData.entries().forEach(([key, val]) => console.log(key+": "+val))
 
-    // axios.post("http://localhost:3000/api/upload", formData, {
-    //   Headers:{
-    //     'Content-Type': 'multipart/formdata'
-    //   }
-    // }).then((res) => {
-    //   console.log(res.data)
-    //   setDisableStartQuiz(false)
-    //   setLoading(false);
+    axios.post("http://localhost:3000/api/upload", formData, {
+      Headers:{
+        'Content-Type': 'multipart/formdata'
+      }
+    }).then((res) => {
+      console.log(res.data)
+      setDisableStartQuiz(false)
+      setLoading(false);
+      setInputfile(null); 
 
-    //   if(res.data.quiz){
-    //     setQuiz(res.data.quiz)
-    //   }
-    // }).catch((err) => {
-    //   console.log(err)
-    //   setLoading(false);
-    // })
+      if(res.data.quiz){
+        setQuiz(res.data.quiz)
+      }
+    }).catch((err) => {
+      console.log(err)
+      setLoading(false);
+      toast.error("Failed to generate quiz")
+    })
   }
 
   const handleStartQuiz = () => navigate("/quiz");
 
   return (
-    <section style={{minHeight: "92vh"}} className="text-light bg-dark">
+    <section className="text-light bg-dark form-container">
       <form className="container py-3 px-5">
         <h5 style={{color: "white"}}>Upload File to start a quiz</h5>
         <div className="input-group mb-3">
@@ -74,7 +76,7 @@ const Form = () => {
               name="inputfile"
               onChange={handleSetFile}
             />
-            <label className="custom-file-label" htmlFor="inputfile">
+            <label className="custom-file-label" htmlFor="inputfile" style={{overflow: "hidden"}}>
               {inputfile ? inputfile.name :"Choose file"}
             </label>
           </div>
